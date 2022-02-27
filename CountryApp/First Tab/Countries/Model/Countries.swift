@@ -11,6 +11,11 @@ public struct Country: Codable {
     public let name: Name?
     public let region, subregion: String?
     public let flags: FlagUrl?
+    public let currencies: [String: Currency]?
+    public let capital: [String]?
+    public let languages: [String: String]?
+    public let borders: [String]?
+    public let latlng: [Double]?
 }
 
 // MARK: - CoatOfArms
@@ -26,5 +31,14 @@ public struct Maps: Codable {
 
 // MARK: - Name
 public struct Name: Codable {
+    public let common, official: String?
+    public let nativeName: [String: NativeName]?
+}
+
+public struct Currency: Codable {
+    public let name, symbol: String?
+}
+
+public struct NativeName: Codable {
     public let common, official: String?
 }

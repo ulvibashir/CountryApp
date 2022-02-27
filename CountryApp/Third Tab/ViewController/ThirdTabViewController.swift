@@ -1,5 +1,5 @@
 //
-//  FirstTabViewController.swift
+//  ThirdTabViewController.swift
 //  CountryApp
 //
 //  Created by Ulvi Bashirov on 25.02.22.
@@ -8,16 +8,15 @@
 import UIKit
 import NVActivityIndicatorView
 
-class FirstTabViewController: UIViewController {
-    
+class ThirdTabViewController: UIViewController {
+
     lazy var tableView: UITableView = {
         var tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.separatorStyle = .singleLine
         tableView.backgroundColor = ColorHelper.backgroundColor.uiColor
-        tableView.register(ContinentCell.self, forCellReuseIdentifier: "\(ContinentCell.self)")
+        tableView.register(CountryCell.self, forCellReuseIdentifier: "\(CountryCell.self)")
         tableView.isHidden = true
         tableView.alpha = 0
         return tableView
@@ -36,17 +35,20 @@ class FirstTabViewController: UIViewController {
         return spinner
     }()
     
-    let viewModel: FirstTabViewModel = .init()
-    
+    let viewModel: ThirdTabViewModel = .init()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupUI()
         self.setupChangeHandler()
-        viewModel.getContinents()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        viewModel.fetchCountries()
     }
     
     private func setupUI() {
-        self.title = "Continents"
+        self.title = "Selected"
         self.view.backgroundColor = ColorHelper.backgroundColor.uiColor
         self.view.addSubview(tableView)
         self.view.addSubview(activityIndicator)
@@ -61,15 +63,14 @@ class FirstTabViewController: UIViewController {
     }
 }
 
-extension FirstTabViewController {
+extension ThirdTabViewController {
     private func setupChangeHandler() {
         viewModel.changeHandler = { [unowned self] change in
             self.changeHandler(change: change)
-            
         }
     }
     
-    private func changeHandler(change: FirstTabViewState) {
+    private func changeHandler(change: ThirdTabViewState) {
         switch change {
         case .loading:
             activityIndicator.startAnimating()
@@ -85,3 +86,7 @@ extension FirstTabViewController {
         }
     }
 }
+
+
+
+

@@ -1,31 +1,24 @@
 //
-//  CountriesViewModel.swift
+//  SecondTabViewModel.swift
 //  CountryApp
 //
-//  Created by Ulvi Bashirov on 26.02.22.
+//  Created by Ulvi Bashirov on 27.02.22.
 //
 
 import Foundation
 
-typealias CountryData = (title: String, subtitle: String, iconUrl: String)
-
-class CountriesViewModel {
-    
+class SecondTabViewModel {
     lazy var networkHelper: NetworkHelper = .init()
-    private var countries: [Country] = []
-    var selectedRegion: String?
+    var changeHandler: ((SecondTabViewState) -> Void)?
+    var countries: [Country] = []
     
     var countriesCount: Int {
         countries.count
     }
     
-    var changeHandler: ((CountriesViewState) -> Void)?
-    
-    public func fetchCountries() {
-        guard let region = selectedRegion else { return }
-        
+    func fetchCountries(for text: String) {
         self.changeHandler?(.loading)
-        networkHelper.fetchRequest(endPoint: .countriesURL(region: region)) {
+        networkHelper.fetchRequest(endPoint: .countryDetailURL(country: text)) {
             (result: Swift.Result<[Country], NetworkError>) in
             switch result {
             case let .success(response):
@@ -41,12 +34,9 @@ class CountriesViewModel {
     public func getCountryData(indexPath: IndexPath) -> CountryData {
         guard countries.count > indexPath.row else { return  ("", "", "")}
         
-        let title = countries[indexPath.row].name?.common ?? ""
-        let subtitle = countries[indexPath.row].name?.nativeName?.first?.value.common ?? ""
-        
         return (
-            title: title,
-            subtitle: subtitle,
+            title: countries[indexPath.row].name?.common ?? "",
+            subtitle: countries[indexPath.row].name?.official ?? "",
             iconUrl: countries[indexPath.row].flags?.png ?? "")
     }
 }

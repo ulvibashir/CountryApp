@@ -15,7 +15,7 @@ extension FirstTabViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = ContinentCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: "\(ContinentCell.self)") as! ContinentCell
         cell.configure(for: viewModel.getContinentData(indexPath: indexPath))
         cell.selectionStyle = .none
         return cell

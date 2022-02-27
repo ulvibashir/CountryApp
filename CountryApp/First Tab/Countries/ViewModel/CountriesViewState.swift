@@ -7,10 +7,8 @@
 
 import Foundation
 
-struct CountriesViewState {
-    enum Change {
-        case loading
-        case loaded
-        case error
-    }
+enum CountriesViewState {
+    case loading
+    case loaded
+    case error
 }

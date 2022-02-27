@@ -10,6 +10,7 @@ import Foundation
 enum Endpoints {
     case continentsURL
     case countriesURL(region: String)
+    case countryDetailURL(country: String)
 }
 
 extension Endpoints: EndPointType {
@@ -19,12 +20,14 @@ extension Endpoints: EndPointType {
             return "https://my-json-server.typicode.com/ulvibashir/DB/db"
         case let .countriesURL(region):
             return "https://restcountries.com/v3.1/region/\(region)"
+        case let .countryDetailURL(country):
+            return "https://restcountries.com/v3.1/name/\(country)"
         }
     }
     
     var httpMethod: HTTPMethod {
         switch self {
-        case .continentsURL, .countriesURL:
+        case .continentsURL, .countriesURL, .countryDetailURL:
             return .get
         }
     }

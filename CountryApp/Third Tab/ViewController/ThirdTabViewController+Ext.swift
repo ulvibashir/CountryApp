@@ -1,15 +1,15 @@
 //
-//  CountriesViewController+Ext.swift
+//  ThirdTabViewController+Ext.swift
 //  CountryApp
 //
-//  Created by Ulvi Bashirov on 26.02.22.
+//  Created by Ulvi Bashirov on 27.02.22.
 //
+
 
 import Foundation
 import UIKit
 
-// MARK: TableView
-extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
+extension ThirdTabViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.countriesCount
     }
@@ -32,18 +32,15 @@ extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         navigateNext(for: viewModel.getCountryData(indexPath: indexPath).title)
     }
-}
-// MARK: Navigation
-extension CountriesViewController {
+    
     func navigateNext(for country: String) {
         let vc = CountryDetailsViewController(with: country)
         navigationController?.pushViewController(vc, animated: true)
     }
 }
 
-
 // MARK: Constraints
-extension CountriesViewController {
+extension ThirdTabViewController {
     func applyConstraints() {
         NSLayoutConstraint.activate([
             self.tableView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),

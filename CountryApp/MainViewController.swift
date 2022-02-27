@@ -41,24 +41,30 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
     
     private func createSecondTab() -> UIViewController {
         let tab = SecondTabViewController()
+        let navBar = UINavigationController(rootViewController: tab)
         let tabBarItem = UITabBarItem(
             title: "Search",
             image: IconHelper.searchIcon.uiImage,
             tag: 1)
-        tab.tabBarItem = tabBarItem
         
-        return tab
+        tab.tabBarItem = tabBarItem
+        navBar.navigationBar.prefersLargeTitles = true
+        
+        return navBar
     }
     
     private func createThirdTab() -> UIViewController {
         let tab = ThirdTabViewController()
+        let navBar = UINavigationController(rootViewController: tab)
         let tabBarItem = UITabBarItem(
             title: "Selected",
             image: IconHelper.selectedIcon.uiImage,
             tag: 2)
-        tab.tabBarItem = tabBarItem
         
-        return tab
+        tab.tabBarItem = tabBarItem
+        navBar.navigationBar.prefersLargeTitles = true
+        
+        return navBar
     }
 }
 

@@ -17,6 +17,8 @@ class CountriesViewController: UIViewController {
         tableView.dataSource = self
         tableView.backgroundColor = ColorHelper.backgroundColor.uiColor
         tableView.register(CountryCell.self, forCellReuseIdentifier: "\(CountryCell.self)")
+        tableView.isHidden = true
+        tableView.alpha = 0
         return tableView
     }()
     
@@ -59,6 +61,12 @@ class CountriesViewController: UIViewController {
         self.applyConstraints()
     }
     
+    private func showUI() {
+        tableView.isHidden = false
+        UIView.animate(withDuration: 0.3) {
+            self.tableView.alpha = 1.0
+        }
+    }
 }
 
 extension CountriesViewController {
@@ -68,16 +76,18 @@ extension CountriesViewController {
         }
     }
     
-    private func changeHandler(change: CountriesViewState.Change) {
+    private func changeHandler(change: CountriesViewState) {
         switch change {
         case .loading:
             activityIndicator.startAnimating()
         case .loaded:
             DispatchQueue.main.async {
                 self.tableView.reloadData()
+                self.showUI()
                 self.activityIndicator.stopAnimating()
             }
         case .error:
+            self.activityIndicator.stopAnimating()
             ErrorHelper.showAlert(sender: self)
         }
     }

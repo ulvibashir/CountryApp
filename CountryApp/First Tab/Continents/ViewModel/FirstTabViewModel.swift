@@ -8,14 +8,14 @@
 import Foundation
 
 class FirstTabViewModel {
-    let networkHelper: NetworkHelper = .init()
+    lazy var networkHelper: NetworkHelper = .init()
     private var responseData: ContinentsResponse?
     
     var continentsCount: Int {
         responseData?.continents?.count ?? 0
     }
     
-    var changeHandler: ((FirstTabViewState.Change) -> Void)?
+    var changeHandler: ((FirstTabViewState) -> Void)?
     
     public func getContinentData(indexPath: IndexPath) -> String {
         guard let responseData = responseData else { return "" }

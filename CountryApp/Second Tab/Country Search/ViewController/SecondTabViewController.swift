@@ -1,5 +1,5 @@
 //
-//  FirstTabViewController.swift
+//  SecondTabViewController.swift
 //  CountryApp
 //
 //  Created by Ulvi Bashirov on 25.02.22.
@@ -8,18 +8,24 @@
 import UIKit
 import NVActivityIndicatorView
 
-class FirstTabViewController: UIViewController {
+class SecondTabViewController: UIViewController {
+    
+    lazy var searchBar: UISearchBar = {
+        let search = UISearchBar()
+        search.translatesAutoresizingMaskIntoConstraints = false
+        search.searchBarStyle = .minimal
+        search.placeholder = "Country"
+        search.delegate = self
+        return search
+    }()
     
     lazy var tableView: UITableView = {
         var tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.separatorStyle = .singleLine
         tableView.backgroundColor = ColorHelper.backgroundColor.uiColor
-        tableView.register(ContinentCell.self, forCellReuseIdentifier: "\(ContinentCell.self)")
-        tableView.isHidden = true
-        tableView.alpha = 0
+        tableView.register(CountryCell.self, forCellReuseIdentifier: "\(CountryCell.self)")
         return tableView
     }()
     
@@ -36,52 +42,42 @@ class FirstTabViewController: UIViewController {
         return spinner
     }()
     
-    let viewModel: FirstTabViewModel = .init()
-    
+    let viewModel: SecondTabViewModel = .init()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupUI()
-        self.setupChangeHandler()
-        viewModel.getContinents()
+        self.title = "Search"
+        self.view.backgroundColor = ColorHelper.backgroundColor.uiColor
+        setupChangeHandler()
+        setupUI()
     }
     
     private func setupUI() {
-        self.title = "Continents"
-        self.view.backgroundColor = ColorHelper.backgroundColor.uiColor
+        self.view.addSubview(searchBar)
         self.view.addSubview(tableView)
         self.view.addSubview(activityIndicator)
-        self.applyConstraints()
-    }
-    
-    private func showUI() {
-        tableView.isHidden = false
-        UIView.animate(withDuration: 0.3) {
-            self.tableView.alpha = 1.0
-        }
+        applyConstraints()
     }
 }
 
-extension FirstTabViewController {
+extension SecondTabViewController {
     private func setupChangeHandler() {
         viewModel.changeHandler = { [unowned self] change in
             self.changeHandler(change: change)
-            
         }
     }
     
-    private func changeHandler(change: FirstTabViewState) {
+    private func changeHandler(change: SecondTabViewState) {
         switch change {
         case .loading:
             activityIndicator.startAnimating()
         case .loaded:
             DispatchQueue.main.async {
                 self.tableView.reloadData()
-                self.showUI()
                 self.activityIndicator.stopAnimating()
             }
         case .error:
             self.activityIndicator.stopAnimating()
-            ErrorHelper.showAlert(sender: self)
         }
     }
 }

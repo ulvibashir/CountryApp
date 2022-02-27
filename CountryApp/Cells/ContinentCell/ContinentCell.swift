@@ -44,8 +44,8 @@ class ContinentCell: UITableViewCell {
             titleLabel.trailingAnchor.constraint(equalTo: self.rightIcon.leadingAnchor, constant: -16),
             titleLabel.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
             
-            rightIcon.heightAnchor.constraint(equalToConstant: 20),
-            rightIcon.widthAnchor.constraint(equalToConstant: 12),
+            rightIcon.heightAnchor.constraint(equalToConstant: 16),
+            rightIcon.widthAnchor.constraint(equalToConstant: 8),
             rightIcon.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
             rightIcon.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -20)
         ])
